@@ -27,6 +27,15 @@ public class Vertex<VT> implements Comparable<Vertex<VT>> {
         return this.num;
     }
 
+    //возвращает HashCode объекта по его ID
+    @Override
+    public int hashCode() {
+        return (new Integer(this.num)).hashCode();
+    }
+
+
+
+
     //возвращает рёбра
     public LinkedList<WEdge<VT>> getEdges() {
         return this.edges;
@@ -41,6 +50,10 @@ public class Vertex<VT> implements Comparable<Vertex<VT>> {
     public VT data() {
         return this.data;
     }
+    public VT getData(){
+        return this.data;
+    }
+
 
     //создает новый граф
     public Vertex(VT d, int id) {
@@ -83,8 +96,8 @@ public class Vertex<VT> implements Comparable<Vertex<VT>> {
 
 
     @Override
-    public int compareTo(Vertex<VT> o) {
-        return 0;
+    public int compareTo(Vertex<VT> other) {
+        return this.num - other.id();
     }
 
 
