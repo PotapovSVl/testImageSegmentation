@@ -14,7 +14,6 @@ public class Vertex<VT> implements Comparable<Vertex<VT>> {
     private VT data;
 
 
-    //создает новый граф
 
 
     //лист рёбер
@@ -28,11 +27,22 @@ public class Vertex<VT> implements Comparable<Vertex<VT>> {
         return this.num;
     }
 
+    //возвращает рёбра
+    public LinkedList<WEdge<VT>> getEdges() {
+        return this.edges;
+    }
+
+    //возвращает соседей
+    public HashSet<Vertex<VT>> getNeighbor() {
+        return this.neighbor;
+    }
+
     //возвращает данные
     public VT data() {
         return this.data;
     }
 
+    //создает новый граф
     public Vertex(VT d, int id) {
         this.data = data;
         this.num = id;
@@ -47,6 +57,8 @@ public class Vertex<VT> implements Comparable<Vertex<VT>> {
         this.neighbor = new HashSet<Vertex<VT>>();
     }
 
+    //добавить ребро, вернуть true, если добавлено
+
     public boolean addEdge(WEdge<VT> e) {
         this.edges.add(e);
         if (e.source().id() == this.num) {
@@ -57,7 +69,16 @@ public class Vertex<VT> implements Comparable<Vertex<VT>> {
         return true;
     }
 
-
+    //удалить ребро, вернуть true, если удалено
+    public boolean removeEdge(WEdge<VT> e) {
+        this.edges.remove(e);
+        if (e.source().id() == this.num) {
+            this.neighbor.remove(e.end());
+        } else {
+            this.neighbor.remove(e.source());
+        }
+        return true;
+    }
 
 
 
@@ -65,6 +86,8 @@ public class Vertex<VT> implements Comparable<Vertex<VT>> {
     public int compareTo(Vertex<VT> o) {
         return 0;
     }
+
+
 
 
 }
