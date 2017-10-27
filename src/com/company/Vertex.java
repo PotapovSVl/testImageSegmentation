@@ -12,8 +12,8 @@ public class Vertex<VT> implements Comparable<Vertex<VT>> {
     private int num;
     //данные
     private VT data;
-
-
+    //флаг для обходов
+    private boolean visited;
 
 
     //лист рёбер
@@ -27,13 +27,16 @@ public class Vertex<VT> implements Comparable<Vertex<VT>> {
         return this.num;
     }
 
+    public boolean setID(int id) {
+        this.num = id;
+        return (this.num == id);
+    }
+
     //возвращает HashCode объекта по его ID
     @Override
     public int hashCode() {
-        return (new Integer(this.num)).hashCode();
+        return new Integer(this.num).hashCode();
     }
-
-
 
 
     //возвращает рёбра
@@ -50,7 +53,8 @@ public class Vertex<VT> implements Comparable<Vertex<VT>> {
     public VT data() {
         return this.data;
     }
-    public VT getData(){
+
+    public VT getData() {
         return this.data;
     }
 
@@ -68,10 +72,10 @@ public class Vertex<VT> implements Comparable<Vertex<VT>> {
     public void reset() {
         this.edges = new LinkedList<WEdge<VT>>();
         this.neighbor = new HashSet<Vertex<VT>>();
+        this.visited =false;
     }
 
     //добавить ребро, вернуть true, если добавлено
-
     public boolean addEdge(WEdge<VT> e) {
         this.edges.add(e);
         if (e.source().id() == this.num) {
@@ -93,14 +97,29 @@ public class Vertex<VT> implements Comparable<Vertex<VT>> {
         return true;
     }
 
-
-
-    @Override
-    public int compareTo(Vertex<VT> other) {
-        return this.num - other.id();
+    //составить строковое представление для вершины.
+    public String toString() {
+        return "(" + this.data + " - ID:" + this.num + ")";
     }
 
 
+    //проверить пренадлежность двух вершин одному айди
+    public boolean equals(Object other) {
+        if (other instanceof Vertex) {
+            Vertex v = (Vertex) other;
+            return this.num == v.id();
+        } else return false;
 
 
+    }
+    public boolean isVisited(){return this.visited;}
+
+    public void markVisited() {this.visited=true;}
+
+    public void createVisited(){this.visited= false;}
+
+    @Override
+    public int compareTo(Vertex<VT> o) {
+        return this.num - o.id();
+    }
 }
